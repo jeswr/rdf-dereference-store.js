@@ -20,7 +20,7 @@ const { store } = await dereference('https://www.jeswr.org/#me');
 const { store } = await dereference('/path/to/file.ttl', { localFiles: true });
 
 // Fetch store from an input stream
-const { store } = await dereference(fs.createReadStream('/path/to/file.ttl'), { contentType: 'text/turtle' });
+const { store } = await parse(fs.createReadStream('/path/to/file.ttl'), { contentType: 'text/turtle' });
 ```
 
 ## License
