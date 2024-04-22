@@ -10,13 +10,17 @@ Dereference a remote dataset to a store using [rdf-dereference](https://www.npmj
 
 ## Usage
 ```ts
-import dereference from 'rdf-dereference-store';
+import fs from 'fs';
+import dereference, { parse } from 'rdf-dereference-store';
 
 // Fetch store from a remote document
 const { store } = await dereference('https://www.jeswr.org/#me');
 
 // Fetch store from a local document
 const { store } = await dereference('/path/to/file.ttl', { localFiles: true });
+
+// Fetch store from an input stream
+const { store } = await parse(fs.createReadStream('/path/to/file.ttl'), { contentType: 'text/turtle' });
 ```
 
 ## License

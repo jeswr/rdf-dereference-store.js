@@ -1,9 +1,18 @@
 import path from 'path';
+import fs from 'fs';
 import rdfServe from 'rdf-serve';
-import dereference from '../lib';
+import dereference, { parse } from '../lib';
+
+it('should parse a stream', async () => {
+  const { store, prefixes } = await dereference(path.join(__dirname, 'data', 'test.ttl'), { localFiles: true });
+  expect(store.size).toBe(3);
+  expect(prefixes).toEqual({
+    ex: 'http://example.org/',
+  });
+});
 
 it('should fetch a local document', async () => {
-  const { store, prefixes } = await dereference(path.join(__dirname, 'data', 'test.ttl'), { localFiles: true });
+  const { store, prefixes } = await parse(fs.createReadStream(path.join(__dirname, 'data', 'test.ttl')), { contentType: 'text/turtle' });
   expect(store.size).toBe(3);
   expect(prefixes).toEqual({
     ex: 'http://example.org/',
