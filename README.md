@@ -21,6 +21,9 @@ const { store } = await dereference('/path/to/file.ttl', { localFiles: true });
 
 // Fetch store from an input stream
 const { store } = await parse(fs.createReadStream('/path/to/file.ttl'), { contentType: 'text/turtle' });
+
+// Fetch store from an input string
+const { store } = await parse(fs.readFileSync('/path/to/file.ttl').toString(), { contentType: 'text/turtle' });
 ```
 
 ## License
