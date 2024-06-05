@@ -41,7 +41,6 @@
   "homepage": "https://github.com/jeswr/rdf-dereference-store.js#readme",
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/n3": "^1.16.4",
     "@types/streamify-string": "^1.0.4",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
@@ -97,6 +96,7 @@
   },
   "dependencies": {
     "@rdfjs/types": "^1.1.0",
+    "@types/n3": "^1.16.4",
     "event-emitter-promisify": "^1.1.0",
     "n3": "^1.17.3",
     "rdf-dereference": "^2.2.0",
