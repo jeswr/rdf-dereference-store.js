@@ -11,6 +11,14 @@ it('should fetch a local document', async () => {
   });
 });
 
+it('should fetch 2 local documents', async () => {
+  const { store, prefixes } = await dereference([path.join(__dirname, 'data', 'test.ttl'), path.join(__dirname, 'data', 'test2.ttl')], { localFiles: true });
+  expect(store.size).toBe(4);
+  expect(prefixes).toEqual({
+    ex: 'http://example.org/',
+  });
+});
+
 it('should parse a stream', async () => {
   const { store, prefixes } = await parse(fs.createReadStream(path.join(__dirname, 'data', 'test.ttl')), { contentType: 'text/turtle' });
   expect(store.size).toBe(3);

@@ -4,6 +4,7 @@ import parseStream from 'rdf-parse';
 import { promisifyEventEmitter } from 'event-emitter-promisify';
 import { DatasetCore, Stream, Quad } from '@rdfjs/types';
 import streamify from 'streamify-string';
+import { UnionIterator, wrap } from 'asynciterator';
 
 export interface StoreAndPrefixes {
   store: DatasetCore,
@@ -17,9 +18,17 @@ export function streamToStore(data: Stream<Quad>) {
 }
 
 export default async function dereferenceToStore(
-  ...args: Parameters<typeof dereference.dereference>
+  input: string | string[],
+  options?: Parameters<typeof dereference.dereference>[1],
 ) {
-  return streamToStore((await dereference.dereference(...args)).data);
+  const stream: Stream<Quad> = Array.isArray(input)
+    ? new UnionIterator<Quad>(input.map(
+      async (url) => (await dereference.dereference(url, options)).data,
+      // eslint-disable-next-line no-sequences
+    ).map((it) => wrap(it.then((itResolved) => (itResolved.on('prefix', (...args) => stream.emit('prefix', ...args)), itResolved)), { autoStart: false })), { autoStart: false })
+    : (await dereference.dereference(input, options)).data;
+
+  return streamToStore(stream);
 }
 
 export async function parse(

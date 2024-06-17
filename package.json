@@ -97,6 +97,7 @@
   "dependencies": {
     "@rdfjs/types": "^1.1.0",
     "@types/n3": "^1.16.4",
+    "asynciterator": "^3.9.0",
     "event-emitter-promisify": "^1.1.0",
     "n3": "^1.17.3",
     "rdf-dereference": "^2.2.0",
