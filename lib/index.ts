@@ -3,7 +3,7 @@ import dereference from 'rdf-dereference';
 import parseStream from 'rdf-parse';
 import { promisifyEventEmitter } from 'event-emitter-promisify';
 import { DatasetCore, Stream, Quad } from '@rdfjs/types';
-import streamify from 'streamify-string';
+import { Readable } from 'readable-stream';
 import { UnionIterator, wrap } from 'asynciterator';
 
 export interface StoreAndPrefixes {
@@ -35,5 +35,5 @@ export async function parse(
   input: string | Parameters<typeof parseStream.parse>[0],
   options: Parameters<typeof parseStream.parse>[1],
 ) {
-  return streamToStore(parseStream.parse(typeof input === 'string' ? streamify(input) : input, options));
+  return streamToStore(parseStream.parse(typeof input === 'string' ? Readable.from([input]) : input, options));
 }
