@@ -1,6 +1,6 @@
 import { Store } from 'n3';
-import dereference from 'rdf-dereference';
-import parseStream from 'rdf-parse';
+import { rdfDereferencer } from 'rdf-dereference';
+import { rdfParser } from 'rdf-parse';
 import { promisifyEventEmitter } from 'event-emitter-promisify';
 import { DatasetCore, Stream, Quad } from '@rdfjs/types';
 import { Readable } from 'readable-stream';
@@ -19,21 +19,21 @@ export function streamToStore(data: Stream<Quad>) {
 
 export default async function dereferenceToStore(
   input: string | string[],
-  options?: Parameters<typeof dereference.dereference>[1],
+  options?: Parameters<typeof rdfDereferencer.dereference>[1],
 ) {
   const stream: Stream<Quad> = Array.isArray(input)
     ? new UnionIterator<Quad>(input.map(
-      async (url) => (await dereference.dereference(url, options)).data,
+      async (url) => (await rdfDereferencer.dereference(url, options)).data,
       // eslint-disable-next-line no-sequences
     ).map((it) => wrap(it.then((itResolved) => (itResolved.on('prefix', (...args) => stream.emit('prefix', ...args)), itResolved)), { autoStart: false })), { autoStart: false })
-    : (await dereference.dereference(input, options)).data;
+    : (await rdfDereferencer.dereference(input, options)).data;
 
   return streamToStore(stream);
 }
 
 export async function parse(
-  input: string | Parameters<typeof parseStream.parse>[0],
-  options: Parameters<typeof parseStream.parse>[1],
+  input: string | Parameters<typeof rdfParser.parse>[0],
+  options: Parameters<typeof rdfParser.parse>[1],
 ) {
-  return streamToStore(parseStream.parse(typeof input === 'string' ? Readable.from([input]) : input, options));
+  return streamToStore(rdfParser.parse(typeof input === 'string' ? Readable.from([input]) : input, options));
 }
