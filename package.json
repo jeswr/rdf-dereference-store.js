@@ -95,7 +95,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@rdfjs/types": "^1.1.0",
+    "@rdfjs/types": "^2.0.0",
     "@types/n3": "^1.16.4",
     "asynciterator": "^3.9.0",
     "event-emitter-promisify": "^1.1.0",
