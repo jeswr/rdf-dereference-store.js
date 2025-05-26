@@ -17,7 +17,7 @@ export function streamToStore(data: Stream<Quad>) {
   return promisifyEventEmitter(res.store.import(data), res);
 }
 
-export default async function dereferenceToStore(
+export async function dereferenceToStore(
   input: string | string[],
   options?: Parameters<typeof rdfDereferencer.dereference>[1],
 ) {
@@ -30,6 +30,8 @@ export default async function dereferenceToStore(
 
   return streamToStore(stream);
 }
+
+export default dereferenceToStore;
 
 export async function parse(
   input: string | Parameters<typeof rdfParser.parse>[0],
