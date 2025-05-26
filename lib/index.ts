@@ -31,6 +31,8 @@ export default async function dereferenceToStore(
   return streamToStore(stream);
 }
 
+export dereferenceToStore;
+
 export async function parse(
   input: string | Parameters<typeof rdfParser.parse>[0],
   options: Parameters<typeof rdfParser.parse>[1],
