@@ -95,13 +95,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@rdfjs/types": "^1.1.0",
-    "@types/n3": "^1.16.4",
+    "@rdfjs/types": "^2.0.1",
+    "@types/n3": "^1.26.1",
     "asynciterator": "^3.9.0",
     "event-emitter-promisify": "^1.1.0",
-    "n3": "^1.17.3",
-    "rdf-dereference": "^4.0.0",
-    "rdf-parse": "^4.0.0",
+    "n3": "^2.0.1",
+    "rdf-dereference": "^5.0.0",
+    "rdf-parse": "^5.0.0",
     "readable-stream": "^4.5.2"
   }
 }
